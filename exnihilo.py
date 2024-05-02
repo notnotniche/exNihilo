@@ -34,15 +34,15 @@ def main():
                 if not line3.strip():
                     print("Please write something !")
                     continue
-                if not line3.strip().isdigit():
-                    print("Please enter a number !")
+                if not line3.strip().isdigit() or not 0 <= int(line3.strip()) <= 10:
+                    print("Please enter a number between 0 and 10!")
                     continue
-                else:
+                else:   
                     x = 3
             
         now = datetime.now()
         date_str = f"{now.year}_{now.month}_{now.day}"
-        formatted_message = f"Today's date: {date_str}\n\nWhat do you want to achieve today on your computer :)   ?\n{line1}\nWhat did you achieve yesterday  :)  ?\n{line2}\nWhat grade would you give your productivity for yesterday :)   \n{line3}"
+        formatted_message = f"Today's date: {date_str}\n\nWhat do you want to achieve today on your computer ?\n{line1}\nWhat did you achieve yesterday  ?\n{line2}\nWhat grade would you give your productivity for yesterday\n{line3}"
         if not os.path.exists('./exnihilolog/'):
             os.makedirs('./exnihilolog/')
         
@@ -50,8 +50,17 @@ def main():
             f.write(formatted_message + '\n')
     else:
         file = get_latest_file("./exnihilolog")
+        while True:
+            line4 = input("Did you do a bit of leetcode today? (yes/no) \n").lower()
+            if line4 in ['yes', 'no']:
+                break
+            else:
+                print("Invalid input. Please enter 'yes' or 'no'.")
+        line5 = input("Tell me something you ve learned today !\n")
         with open (file, 'a') as f:
-            f.write("\n\nYou're on the right path continue")
+            f.write("Did you do a bit of leetcode today? (yes/no) \n" + line4 + "\n")
+            f.write("Tell me something you ve learned today !\n" + line5 + "\n")
+            f.write("\n\nYou're on the right path continue\n")
         os.chmod(file, stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
         print("File is now sealed \n")
 
